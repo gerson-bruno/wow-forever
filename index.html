@@ -3,124 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WoW Forever - Guia Definitivo de Raças e Classes</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Guia de raças, classes e combinações do World of Warcraft: Forever (Classic+), com a nova raça Skyborne.">
+    <title>WoW Forever - Guia de Raças e Classes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-    <!-- Cabeçalho e Player de Música de Fundo -->
-    <header class="hero-header">
-        <div class="hero-content">
-            <span class="badge">Classic Plus Edition</span>
+    <header class="hero">
+        <div class="hero-inner">
+            <p class="badge">Classic Plus</p>
             <h1>World of Warcraft: Forever</h1>
-            <p>Guia completo baseado atualizado de raças e classes.</p>
+            <p class="hero-sub">Guia atualizado de raças, classes e combinações.</p>
         </div>
 
-        <!-- Player de Música de Fundo -->
-        <div class="audio-player-card">
+        <div class="audio-bar" role="group" aria-label="Trilha sonora">
+            <button id="playBtn" class="btn-audio" type="button" aria-pressed="false">▶ Tocar</button>
             <div class="audio-info">
-                <span class="audio-title">Trilha Sonora: Stormwind</span>
-                <span class="audio-status" id="audioStatus">Pausado</span>
+                <span class="audio-title">Stormwind</span>
+                <span class="audio-status" id="audioStatus" aria-live="polite">Pausado</span>
             </div>
-            <div class="audio-controls">
-                <button id="playBtn" class="btn-audio">▶ Tocar</button>
+            <label class="volume">
+                <span class="sr-only">Volume</span>
                 <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4">
-            </div>
-            <!-- Apontando para o arquivo local dentro da pasta audio/ -->
-            <audio id="bgMusic" preload="auto" loop>
+            </label>
+            <audio id="bgMusic" preload="none" loop>
                 <source src="audio/stormwind.mp3" type="audio/mpeg">
                 Seu navegador não suporta áudio.
             </audio>
-        
         </div>
     </header>
 
-    <!-- Conteúdo Principal -->
-    <main class="container">
-        
-        <!-- Seção 1: Seletor de Raças por Facção (WoW Forever) -->
-        <section class="section-card">
-            <h2>Raças, Facções & Novas Combinações</h2>
-            <p class="section-desc">Selecione uma raça para visualizar os caminhos disponíveis no <em>WoW: Forever</em>.</p>
-            
-            <div class="faction-tabs">
-                <button class="faction-tab active" data-faction="alliance">Aliança</button>
-                <button class="faction-tab" data-faction="horde">Horda</button>
-                <button class="faction-tab" data-faction="skyborne">Skyborne (Neutro)</button>
+    <main id="conteudo" class="container">
+
+        <section class="panel" aria-labelledby="titulo-racas">
+            <h2 id="titulo-racas">Raças e combinações</h2>
+            <p class="section-desc">Escolha uma facção e uma raça para ver as classes disponíveis. Combinações novas em relação ao Classic aparecem em dourado.</p>
+
+            <div class="toolbar">
+                <div class="faction-tabs" role="tablist" aria-label="Facção">
+                    <button class="faction-tab active alliance" role="tab" aria-selected="true" data-faction="alliance" type="button">Aliança</button>
+                    <button class="faction-tab horde" role="tab" aria-selected="false" data-faction="horde" type="button">Horda</button>
+                    <button class="faction-tab skyborne" role="tab" aria-selected="false" data-faction="skyborne" type="button">Skyborne</button>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="onlyNew">
+                    <span>Mostrar só combinações novas</span>
+                </label>
             </div>
 
-            <div class="race-selector" id="raceSelector">
-                <!-- Preenchido via JavaScript -->
-            </div>
+            <p class="notice" id="skyNotice" hidden>
+                A Skyborne pode se unir à Aliança ou à Horda, e a classe extra muda conforme a facção: Mago na Aliança, Xamã na Horda.
+                A raça é paga: exige o Skyborne Heroic Pack ou uma edição que o inclua.
+            </p>
 
-            <div class="race-details-card" id="raceDetailsCard">
-                <div class="race-info-text">
-                    <h3 id="selectedRaceTitle">Escolha uma Raça</h3>
-                    <p id="selectedRaceDesc">Clique em uma das raças acima para ver a lore resumida e as classes disponíveis.</p>
-                    <div class="class-tags" id="raceClassesList"></div>
+            <div class="race-selector" id="raceSelector" role="group" aria-label="Raças"></div>
+
+            <article class="race-card" id="raceDetailsCard" aria-live="polite">
+                <div class="portrait-col">
+                    <div class="portrait" id="racePortrait"></div>
+                    <div class="gender-toggle" role="group" aria-label="Versão do personagem">
+                        <button type="button" class="gender-btn active" data-gender="male" aria-pressed="true" title="Masculino"><span aria-hidden="true">♂</span><span class="sr-only">Masculino</span></button>
+                        <button type="button" class="gender-btn" data-gender="female" aria-pressed="false" title="Feminino"><span aria-hidden="true">♀</span><span class="sr-only">Feminino</span></button>
+                    </div>
                 </div>
-                <div class="race-image-container">
-                    <img id="selectedRaceImg" src="" alt="Ícone da Raça" style="display:none;">
+                <div class="race-info">
+                    <h3 id="selectedRaceTitle">Escolha uma raça</h3>
+                    <p id="selectedRaceDesc"></p>
+                    <ul class="class-tags" id="raceClassesList" aria-label="Classes disponíveis"></ul>
                 </div>
-            </div>
+            </article>
         </section>
 
-        <!-- Seção 2: Grimório de Classes com Ícones -->
-        <section class="section-card">
-            <h2>Grimório de Classes</h2>
-            <p class="section-desc">Explore as especializações e papéis de cada classe no ecossistema do jogo.</p>
-            
-            <div class="class-grid" id="classGrid">
-                <!-- Preenchido via JavaScript -->
-            </div>
+        <section class="panel" aria-labelledby="titulo-classes">
+            <h2 id="titulo-classes">Grimório de classes</h2>
+            <p class="section-desc">Selecione uma classe para ver papéis, dificuldade e especializações.</p>
+            <div class="class-grid" id="classGrid"></div>
         </section>
-
     </main>
 
     <footer>
-        <p>&copy; 2026 - WoW Forever Community Project. </p>
+        <p>&copy; 2026 WoW Forever Community Project. Projeto de fãs, sem vínculo com a Blizzard Entertainment.</p>
+        <p>As especializações seguem as árvores do WoW Classic e podem mudar até o lançamento.</p>
     </footer>
 
-    <script src="script.js"></script>
-
-<!-- Modal de Detalhes da Classe -->
-    <div id="classModal" class="modal-overlay" style="display: none;">
-        <div class="modal-container">
-            <button class="modal-close" id="closeModalBtn">&times;</button>
-            
-            <div class="modal-content-wrapper">
-                <!-- Coluna Esquerda: Texto Detalhado e Scrollável -->
-                <div class="modal-scrollable-text">
+    <div id="classModal" class="modal-overlay" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalClassName">
+            <button class="modal-close" id="closeModalBtn" type="button" aria-label="Fechar">&times;</button>
+            <div class="modal-body">
+                <div class="modal-text">
                     <span id="modalClassRole" class="class-role"></span>
                     <h2 id="modalClassName"></h2>
-                    
                     <div class="class-difficulty">
-                        <span>Dificuldade:</span>
-                        <div id="modalDifficulty"></div>
+                        <span>Dificuldade para iniciantes</span>
+                        <span id="modalDifficulty"></span>
                     </div>
-
-                    <p id="modalClassDesc" class="modal-main-desc"></p>
-                    
-                    <div class="modal-specs-section">
-                        <h3>Especializações</h3>
-                        <div id="modalSpecsList">
-                            <!-- Preenchido dinamicamente via JS -->
-                        </div>
-                    </div>
+                    <p class="difficulty-note">Avaliação do guia, baseada na experiência da comunidade do Classic. Não é um dado oficial.</p>
+                    <p id="modalClassDesc" class="modal-desc"></p>
+                    <h3 class="specs-title">Especializações</h3>
+                    <div id="modalSpecsList"></div>
                 </div>
-
-                <!-- Coluna Direita: Imagem Fixa -->
-                <div class="modal-fixed-image">
-                    <div class="modal-image-wrapper">
-                        <img id="modalClassImg" src="" alt="Ícone da Classe">
-                    </div>
-                </div>
+                <div class="modal-portrait" id="modalPortrait"></div>
             </div>
         </div>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
