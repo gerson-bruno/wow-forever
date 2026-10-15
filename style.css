@@ -1,346 +1,1786 @@
+/* =========================================================
+   WoW Forever — Estilo inspirado no site oficial do WoW
+   Layout baseado na referência medelo-site.jpg
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. Variáveis de design (Design Tokens)
+   --------------------------------------------------------- */
 :root {
-    --bg: #0b0d10;
-    --stone: #14171c;
-    --stone-2: #1b1f26;
-    --edge: #3a3326;
-    --gold: #f0c040;
-    --gold-dim: #b8902c;
-    --parchment: #e8dcc0;
-    --text: #e9e6dc;
-    --muted: #a7a595;
-    --alliance: #3f7fd6;
-    --horde: #c0392b;
-    --sky: #4fc3c9;
-    --font-title: 'LifeCraft', 'Cinzel', Georgia, serif;
-    --font-head: 'Cinzel', Georgia, serif;
-    --font-body: 'Inter', system-ui, sans-serif;
-    --accent: var(--gold);
+  /* Cores primárias */
+  --bg-darkest: #08090c;
+  --bg-dark: #0d1017;
+  --bg-panel: #1a150f;
+  --bg-panel-alt: #201a12;
+  --bg-inset: #110e09;
+
+  /* Dourados — paleta do WoW */
+  --gold: #f0c040;
+  --gold-bright: #ffd54f;
+  --gold-dim: #b8902c;
+  --gold-dark: #6b5212;
+  --gold-glow: rgba(240, 192, 64, 0.25);
+
+  /* Cores de facção */
+  --alliance: #3f7fd6;
+  --horde: #c0392b;
+  --sky: #4fc3c9;
+
+  /* Texto */
+  --text: #e9e6dc;
+  --text-bright: #fff8e1;
+  --parchment: #e8dcc0;
+  --muted: #a7a595;
+
+  /* Bordas */
+  --border-gold: #5c4a1e;
+  --border-dark: #2a2015;
+
+  /* Tipografia */
+  --font-title: 'LifeCraft', 'Cinzel', Georgia, serif;
+  --font-head: 'Cinzel', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Atalho usado pelo JS para cor de classe */
+  --accent: var(--gold);
 }
 
+/* ---------------------------------------------------------
+   2. Web Fonts
+   --------------------------------------------------------- */
 @font-face {
-    font-family: 'LifeCraft';
-    src: url('https://cdn.jsdelivr.net/gh/hungsu/wow-font/LifeCraft_2.ttf') format('truetype');
-    font-display: swap;
+  font-family: 'LifeCraft';
+  src: url('https://cdn.jsdelivr.net/gh/hungsu/wow-font/LifeCraft_2.ttf') format('truetype');
+  font-display: swap;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-[hidden] { display: none !important; }
+/* ---------------------------------------------------------
+   3. Reset & Base
+   --------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-    background: var(--bg) radial-gradient(ellipse at top, #1a1d24 0%, var(--bg) 60%) no-repeat;
-    color: var(--text);
-    font-family: var(--font-body);
-    line-height: 1.65;
-    padding-bottom: 40px;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(30, 40, 60, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(20, 15, 8, 0.5) 0%, transparent 50%),
+    var(--bg-darkest);
+  background-attachment: fixed;
 }
 
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.skip-link { position: absolute; left: 12px; top: -60px; background: var(--gold); color: #111; padding: 8px 14px; border-radius: 4px; z-index: 2000; }
-.skip-link:focus { top: 12px; }
+img {
+  display: block;
+  max-width: 100%;
+}
 
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+/* ---------------------------------------------------------
+   4. Acessibilidade
+   --------------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 
-/* Hero */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  background: var(--gold);
+  color: #111;
+  padding: 8px 14px;
+  border-radius: 4px;
+  z-index: 2000;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------
+   5. Navbar ornamental (novo)
+   --------------------------------------------------------- */
+.site-nav {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 20px;
+  height: 52px;
+  background:
+    linear-gradient(180deg,
+      rgba(40, 32, 16, 0.95) 0%,
+      rgba(22, 18, 10, 0.98) 100%);
+  border-top: 2px solid var(--gold-dim);
+  border-bottom: 2px solid var(--gold-dim);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 215, 80, 0.15),
+    inset 0 -1px 0 rgba(255, 215, 80, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Ornamentos laterais da navbar */
+.site-nav::before,
+.site-nav::after {
+  content: '◆';
+  color: var(--gold-dim);
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 8px 18px;
+  color: var(--gold);
+  font-family: var(--font-head);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--gold-bright);
+  border-color: var(--gold-dark);
+  background: rgba(240, 192, 64, 0.08);
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* Separador entre links */
+.nav-sep {
+  width: 3px;
+  height: 3px;
+  background: var(--gold-dim);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* ---------------------------------------------------------
+   6. Hero — banner principal
+   --------------------------------------------------------- */
 .hero {
-    background: linear-gradient(rgba(8, 10, 13, .72), rgba(11, 13, 16, .96)), url('img/header.jpg') center/cover no-repeat, #10131a;
-    border-bottom: 3px double var(--gold-dim);
-    padding: 56px 20px 28px;
-    text-align: center;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 80px 20px 48px;
+  background:
+    linear-gradient(to bottom,
+      rgba(8, 10, 13, 0.3) 0%,
+      rgba(8, 10, 13, 0.6) 50%,
+      rgba(8, 10, 13, 0.95) 100%),
+    url('img/header.jpg') center 30% / cover no-repeat,
+    #10131a;
+  border-bottom: none;
 }
-.hero-inner { max-width: 760px; margin: 0 auto; }
-.badge {
-    display: inline-block;
-    color: var(--gold);
-    border: 1px solid var(--gold-dim);
-    background: rgba(240, 192, 64, .08);
-    padding: 2px 16px;
-    font-family: var(--font-head);
-    font-size: .95rem;
-    letter-spacing: .08em;
-}
-.hero h1 {
-    font-family: var(--font-title);
-    font-weight: 400;
-    font-size: clamp(2.2rem, 7vw, 3.8rem);
-    color: var(--gold);
-    text-shadow: 0 2px 0 #000, 0 0 28px rgba(240, 192, 64, .3);
-    margin: 14px 0 8px;
-    line-height: 1.15;
-}
-.hero-sub { color: var(--parchment); font-size: 1.05rem; max-width: 56ch; margin: 0 auto; }
 
-/* Player de áudio, no estilo de barra de ação */
+/* Borda ornamental inferior do hero com efeito shimmer dourado contínuo */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      var(--gold-dark) 15%,
+      var(--gold-dim) 35%,
+      var(--gold-bright) 50%,
+      var(--gold-dim) 65%,
+      var(--gold-dark) 85%,
+      transparent 100%);
+  background-size: 200% 100%;
+  animation: borderGlowFlow 8s linear infinite;
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+
+@keyframes borderGlowFlow {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Container do Logotipo Oficial de WoW Forever no Header (+15% de escala) */
+.hero-logo-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 14px auto 10px;
+  width: 100%;
+  max-width: 506px;
+}
+
+.hero-logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 334px;
+  height: 334px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(79, 195, 201, 0.32) 0%, rgba(240, 192, 64, 0.18) 45%, rgba(13, 16, 23, 0) 70%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+  animation: logoAuraPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes logoAuraPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.6;
+    background: radial-gradient(circle, rgba(79, 195, 201, 0.26) 0%, rgba(240, 192, 64, 0.14) 45%, rgba(13, 16, 23, 0) 70%);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.95;
+    background: radial-gradient(circle, rgba(79, 195, 201, 0.38) 0%, rgba(240, 192, 64, 0.24) 45%, rgba(13, 16, 23, 0) 70%);
+  }
+}
+
+.hero-title {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-logo {
+  display: block;
+  width: 100%;
+  max-width: 405px;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  filter:
+    drop-shadow(0 14px 28px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 38px rgba(79, 195, 201, 0.32)) drop-shadow(0 0 16px rgba(240, 192, 64, 0.24));
+  animation: logoFloat 6s ease-in-out infinite alternate;
+  transform-origin: center center;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  will-change: transform, filter;
+}
+
+.hero-logo:hover {
+  filter:
+    drop-shadow(0 16px 32px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 45px rgba(79, 195, 201, 0.45)) drop-shadow(0 0 20px rgba(240, 192, 64, 0.35));
+}
+
+@keyframes logoFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-6px) scale(1.012);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-sub {
+  position: relative;
+  z-index: 1;
+  color: var(--parchment);
+  font-size: 0.9rem;
+  max-width: 56ch;
+  margin: 4px auto 0;
+  opacity: 0.95;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------------------------------------------------------
+   7. Countdown — contagem regressiva para 4/Nov
+   --------------------------------------------------------- */
+.countdown-section {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.countdown-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 64px;
+}
+
+.countdown-value {
+  font-family: var(--font-head);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  line-height: 1;
+  text-shadow: 0 0 16px var(--gold-glow);
+}
+
+.countdown-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------
+   8. Player de áudio — barra de ação estilo WoW
+   --------------------------------------------------------- */
 .audio-bar {
-    margin: 26px auto 0;
-    max-width: 430px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: linear-gradient(#1d2128, #12151a);
-    border: 1px solid var(--edge);
-    box-shadow: inset 0 0 0 1px #000, 0 6px 18px rgba(0, 0, 0, .5);
-    padding: 8px 14px;
+  position: relative;
+  margin: 28px auto 0;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+  background:
+    linear-gradient(180deg,
+      rgba(35, 28, 16, 0.95) 0%,
+      rgba(18, 14, 8, 0.98) 100%);
+  border: 1px solid var(--border-gold);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 215, 80, 0.08),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 6px 18px rgba(0, 0, 0, 0.5);
 }
+
+/* Cantoneiras ornamentais */
+.audio-bar::before,
+.audio-bar::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--gold-dim);
+}
+
+.audio-bar::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.audio-bar::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
 .btn-audio {
-    background: linear-gradient(#f5cf63, #c99a22);
-    color: #1a1305;
-    border: 1px solid #6b5212;
-    padding: 6px 12px;
-    font-weight: 700;
-    font-size: .85rem;
-    cursor: pointer;
-    min-width: 92px;
+  background: linear-gradient(180deg, #f5cf63, #c99a22);
+  color: #1a1305;
+  border: 1px solid var(--gold-dark);
+  padding: 6px 14px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  min-width: 96px;
+  font-family: var(--font-body);
+  transition: filter 0.15s;
 }
-.btn-audio:hover { filter: brightness(1.1); }
-.audio-info { display: flex; flex-direction: column; text-align: left; flex: 1; line-height: 1.3; }
-.audio-title { font-size: .9rem; font-weight: 600; }
-.audio-status { font-size: .75rem; color: var(--muted); }
-#volumeSlider { width: 80px; accent-color: var(--gold); }
 
-/* Layout */
-.container { max-width: 1100px; margin: 36px auto 0; padding: 0 16px; display: flex; flex-direction: column; gap: 32px; }
+.btn-audio:hover {
+  filter: brightness(1.12);
+}
 
-/* Painel com moldura dourada de HUD */
+.audio-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.audio-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.audio-status {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+#volumeSlider {
+  width: 80px;
+  accent-color: var(--gold);
+}
+
+/* ---------------------------------------------------------
+   9. Layout principal
+   --------------------------------------------------------- */
+.container {
+  max-width: 1100px;
+  margin: 40px auto 0;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* ---------------------------------------------------------
+   10. Painéis — moldura ornamental estilo WoW
+   --------------------------------------------------------- */
 .panel {
-    position: relative;
-    background: linear-gradient(180deg, var(--stone-2), var(--stone));
-    border: 1px solid var(--edge);
-    box-shadow: inset 0 0 0 2px #000, inset 0 0 0 3px var(--gold-dim), 0 10px 30px rgba(0, 0, 0, .5);
-    padding: 32px 28px;
+  position: relative;
+  background:
+    linear-gradient(180deg,
+      rgba(32, 26, 18, 0.97) 0%,
+      rgba(20, 16, 10, 0.98) 100%);
+  border: 2px solid var(--border-gold);
+  padding: 36px 32px;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 215, 80, 0.06),
+    0 12px 40px rgba(0, 0, 0, 0.5);
 }
+
+/* Cantoneiras ornamentais nos painéis */
+.panel::before,
+.panel::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--gold-dim);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.panel::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.panel::after {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* Cantoneiras inferiores usando o inner wrapper */
+.panel-corner-bl,
+.panel-corner-br {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--gold-dim);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.panel-corner-bl {
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
+}
+
+.panel-corner-br {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
 .panel h2 {
-    font-family: var(--font-head);
-    font-size: 1.7rem;
-    color: var(--gold);
-    border-bottom: 1px solid var(--edge);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+  font-family: var(--font-head);
+  font-size: 1.7rem;
+  color: var(--gold);
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
 }
-.section-desc { color: var(--muted); margin-bottom: 22px; max-width: 70ch; }
 
-/* Abas de facção */
-.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
-.faction-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Separador ornamental sob os títulos */
+.panel h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background:
+    linear-gradient(90deg,
+      var(--gold-dim) 0%,
+      var(--gold) 20%,
+      var(--gold-dim) 40%,
+      transparent 100%);
+}
+
+.section-desc {
+  color: var(--muted);
+  margin-bottom: 24px;
+  max-width: 70ch;
+}
+
+/* ---------------------------------------------------------
+   11. Abas de facção
+   --------------------------------------------------------- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.faction-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 .faction-tab {
-    --accent: var(--gold);
-    background: #0e1115;
-    color: var(--muted);
-    border: 1px solid var(--edge);
-    border-bottom: 3px solid transparent;
-    padding: 9px 20px;
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: .95rem;
-    cursor: pointer;
-    transition: color .15s, border-color .15s, background .15s;
+  --accent: var(--gold);
+  background:
+    linear-gradient(180deg,
+      rgba(20, 16, 10, 0.9) 0%,
+      rgba(14, 11, 6, 0.95) 100%);
+  color: var(--muted);
+  border: 1px solid var(--border-gold);
+  border-bottom: 3px solid transparent;
+  padding: 10px 22px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
-.faction-tab.alliance { --accent: var(--alliance); }
-.faction-tab.horde { --accent: var(--horde); }
-.faction-tab.skyborne { --accent: var(--sky); }
-.faction-tab:hover { color: var(--text); }
-.faction-tab.active { color: #fff; border-color: var(--accent); border-bottom-color: var(--accent); background: linear-gradient(#1c222b, #11151b); }
 
-.toggle { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .9rem; cursor: pointer; }
-.toggle input { accent-color: var(--gold); width: 16px; height: 16px; }
+.faction-tab.alliance {
+  --accent: var(--alliance);
+}
+
+.faction-tab.horde {
+  --accent: var(--horde);
+}
+
+.faction-tab.skyborne {
+  --accent: var(--sky);
+}
+
+.faction-tab:hover {
+  color: var(--text);
+  border-color: var(--gold-dark);
+}
+
+.faction-tab.active {
+  color: #fff;
+  border-color: var(--accent);
+  border-bottom-color: var(--accent);
+  background:
+    linear-gradient(180deg,
+      rgba(30, 24, 14, 0.95) 0%,
+      rgba(16, 12, 6, 0.98) 100%);
+  box-shadow: inset 0 0 12px rgba(240, 192, 64, 0.05);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.toggle input {
+  accent-color: var(--gold);
+  width: 16px;
+  height: 16px;
+}
 
 .notice {
-    background: rgba(79, 195, 201, .08);
-    border-left: 3px solid var(--sky);
-    padding: 10px 14px;
-    margin-bottom: 16px;
-    font-size: .9rem;
-    color: var(--parchment);
-    max-width: 80ch;
+  background: rgba(79, 195, 201, 0.06);
+  border-left: 3px solid var(--sky);
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+  color: var(--parchment);
+  max-width: 80ch;
 }
 
-/* Seletor de raças */
-.race-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 18px; }
+/* ---------------------------------------------------------
+   12. Seletor de raças
+   --------------------------------------------------------- */
+.race-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
 .race-btn {
-    background: #0e1115;
-    border: 1px solid var(--edge);
-    color: var(--text);
-    padding: 10px 12px;
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: .9rem;
-    cursor: pointer;
-    transition: border-color .15s, background .15s;
+  background:
+    linear-gradient(180deg,
+      rgba(20, 16, 10, 0.9) 0%,
+      rgba(12, 10, 6, 0.95) 100%);
+  border: 1px solid var(--border-gold);
+  color: var(--text);
+  padding: 11px 14px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
-.race-btn:hover { border-color: var(--gold-dim); }
-.race-btn.active { border-color: var(--gold); background: rgba(240, 192, 64, .12); color: var(--gold); }
 
-/* Cartão da raça, parecido com tooltip de item */
-.race-card {
-    display: flex;
-    gap: 22px;
-    align-items: center;
-    background: rgba(8, 10, 14, .85);
-    border: 1px solid var(--gold-dim);
-    box-shadow: inset 0 0 0 1px #000;
-    padding: 20px;
+.race-btn:hover {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 8px rgba(240, 192, 64, 0.1);
 }
-.race-info { flex: 1; min-width: 0; }
-.race-card h3 { font-family: var(--font-head); color: var(--gold); font-size: 1.35rem; margin-bottom: 6px; }
-.race-card p { color: var(--parchment); font-size: .95rem; margin-bottom: 14px; max-width: 65ch; }
+
+.race-btn.active {
+  border-color: var(--gold);
+  background: rgba(240, 192, 64, 0.1);
+  color: var(--gold);
+  box-shadow:
+    inset 0 0 10px rgba(240, 192, 64, 0.08),
+    0 0 12px rgba(240, 192, 64, 0.15);
+}
+
+/* ---------------------------------------------------------
+   13. Cartão da raça — estilo tooltip de item
+   --------------------------------------------------------- */
+.race-card {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  background:
+    linear-gradient(135deg,
+      rgba(14, 11, 6, 0.9) 0%,
+      rgba(10, 8, 4, 0.95) 100%);
+  border: 1px solid var(--gold-dim);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.4);
+  padding: 22px;
+}
+
+.race-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.race-card h3 {
+  font-family: var(--font-head);
+  color: var(--gold);
+  font-size: 1.35rem;
+  margin-bottom: 6px;
+}
+
+.race-card p {
+  color: var(--parchment);
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+  max-width: 65ch;
+}
+
+.portrait-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
 
 .portrait {
-    width: 88px; height: 88px; flex-shrink: 0;
-    border: 3px solid var(--gold-dim);
-    border-radius: 50%;
-    background: #000;
-    overflow: hidden;
-    display: grid; place-items: center;
-    box-shadow: 0 0 0 2px #000, 0 6px 16px rgba(0, 0, 0, .6);
-    font-family: var(--font-head); font-size: 2rem; color: var(--gold-dim);
-}
-.portrait img { width: 100%; height: 100%; object-fit: cover; }
-
-.class-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
-.class-tag {
-    --c: var(--muted);
-    background: rgba(255, 255, 255, .04);
-    color: var(--c);
-    border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
-    padding: 4px 11px;
-    font-size: .85rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: var(--font-body);
-}
-.class-tag:hover { background: color-mix(in srgb, var(--c) 18%, transparent); }
-.class-tag.is-new { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(240, 192, 64, .35); }
-.class-tag .flag { color: var(--gold); font-weight: 700; margin-left: 6px; font-size: .72rem; }
-.empty-msg { color: var(--muted); font-style: italic; }
-
-/* Grade de classes: cada card usa a cor oficial da classe */
-.class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
-.class-card {
-    --c: var(--gold);
-    text-align: left;
-    color: inherit;
-    font: inherit;
-    background: linear-gradient(180deg, #1a1e25, #101318);
-    border: 1px solid var(--edge);
-    border-top: 3px solid var(--c);
-    padding: 16px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: border-color .15s, box-shadow .15s;
-}
-.class-card:hover { border-color: var(--c); box-shadow: 0 0 18px color-mix(in srgb, var(--c) 28%, transparent); }
-.card-head { display: flex; align-items: center; gap: 12px; }
-.icon {
-    width: 52px; height: 52px; flex-shrink: 0;
-    border: 2px solid var(--c);
-    background: #000;
-    overflow: hidden;
-    display: grid; place-items: center;
-    font-family: var(--font-head); font-size: 1.4rem; color: var(--c);
-    box-shadow: 0 0 0 1px #000;
-}
-.icon img { width: 100%; height: 100%; object-fit: cover; }
-.class-card h3 { font-family: var(--font-head); color: var(--c); font-size: 1.1rem; line-height: 1.2; }
-.class-role { color: var(--muted); font-size: .8rem; display: block; }
-.class-card p {
-    color: #bdbaa9; font-size: .86rem;
-    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  width: 92px;
+  height: 92px;
+  flex-shrink: 0;
+  border: 3px solid var(--gold-dim);
+  border-radius: 50%;
+  background: #000;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 4px rgba(184, 144, 44, 0.3),
+    0 6px 20px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-head);
+  font-size: 2rem;
+  color: var(--gold-dim);
 }
 
-/* Modal estilo janela de personagem */
-.modal-overlay {
-    position: fixed; inset: 0; z-index: 1000;
-    background: rgba(5, 6, 8, .88);
-    display: flex; align-items: center; justify-content: center;
-    padding: 16px;
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.modal {
-    --c: var(--gold);
-    position: relative;
-    width: 100%; max-width: 860px; max-height: 88vh;
-    background: linear-gradient(180deg, #1c2027, #101318);
-    border: 1px solid var(--c);
-    box-shadow: inset 0 0 0 2px #000, inset 0 0 0 3px var(--gold-dim), 0 20px 50px #000;
-    display: flex; flex-direction: column;
-    animation: open .2s ease-out;
-}
-@keyframes open { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-.modal-close {
-    position: absolute; top: 8px; right: 12px;
-    background: none; border: none;
-    color: var(--muted); font-size: 2rem; line-height: 1;
-    cursor: pointer; padding: 4px 10px; z-index: 2;
-}
-.modal-close:hover { color: var(--gold); }
-.modal-body { display: flex; gap: 28px; padding: 32px; overflow: hidden; min-height: 0; }
-.modal-text { flex: 1; overflow-y: auto; padding-right: 12px; min-width: 0; }
-.modal-text::-webkit-scrollbar { width: 6px; }
-.modal-text::-webkit-scrollbar-thumb { background: var(--edge); }
-.modal-text::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
-.modal h2 { font-family: var(--font-head); font-size: 1.9rem; color: var(--c); line-height: 1.2; margin: 2px 0 10px; }
-.class-difficulty {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: #0c0e12; border: 1px solid var(--edge);
-    padding: 4px 12px; font-size: .85rem; color: var(--muted);
-}
-.stars { color: var(--gold); letter-spacing: 2px; }
-.modal-desc { color: var(--parchment); margin: 16px 0 24px; max-width: 62ch; }
-.specs-title { font-family: var(--font-head); color: var(--gold); font-size: 1.15rem; border-bottom: 1px solid var(--edge); padding-bottom: 6px; margin-bottom: 12px; }
-.spec-item { background: #0c0e12; border: 1px solid var(--edge); border-left: 3px solid var(--c); padding: 12px 14px; margin-bottom: 10px; }
-.spec-item h4 { color: var(--text); font-size: 1rem; margin-bottom: 2px; }
-.spec-item p { color: var(--muted); font-size: .88rem; }
-.modal-portrait {
-    width: 190px; height: 190px; flex-shrink: 0;
-    border: 3px solid var(--c);
-    background: #000;
-    box-shadow: 0 0 0 2px #000, 0 0 30px color-mix(in srgb, var(--c) 30%, transparent);
-    display: grid; place-items: center;
-    font-family: var(--font-head); font-size: 4rem; color: var(--c);
-    overflow: hidden;
-}
-.modal-portrait img { width: 100%; height: 100%; object-fit: cover; }
 
-footer { text-align: center; color: var(--muted); font-size: .82rem; margin: 48px 16px 0; padding-top: 18px; border-top: 1px solid var(--edge); }
-footer p + p { margin-top: 4px; }
+.gender-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border-gold);
+  background: rgba(14, 11, 6, 0.9);
+}
 
-
-/* Alternância masculino / feminino */
-.portrait-col { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
-.gender-toggle { display: inline-flex; border: 1px solid var(--edge); background: #0c0e12; }
 .gender-btn {
-    background: none; border: none; color: var(--muted);
-    width: 40px; height: 32px; font-size: 1.1rem; cursor: pointer;
-    transition: background .15s, color .15s;
+  background: none;
+  border: none;
+  color: var(--muted);
+  width: 40px;
+  height: 32px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
-.gender-btn + .gender-btn { border-left: 1px solid var(--edge); }
-.gender-btn:hover { color: var(--text); }
-.gender-btn.active { background: rgba(240, 192, 64, .16); color: var(--gold); }
 
-/* Mobile */
+.gender-btn+.gender-btn {
+  border-left: 1px solid var(--border-gold);
+}
+
+.gender-btn:hover {
+  color: var(--text);
+}
+
+.gender-btn.active {
+  background: rgba(240, 192, 64, 0.14);
+  color: var(--gold);
+}
+
+/* ---------------------------------------------------------
+   14. Tags de classes no cartão de raça
+   --------------------------------------------------------- */
+.class-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.class-tag {
+  --c: var(--muted);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--c);
+  border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.class-tag:hover {
+  background: color-mix(in srgb, var(--c) 15%, transparent);
+}
+
+.class-tag.is-new {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(240, 192, 64, 0.3);
+}
+
+.class-tag .flag {
+  color: var(--gold);
+  font-weight: 700;
+  margin-left: 6px;
+  font-size: 0.72rem;
+}
+
+.empty-msg {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------
+   15. Grade de classes — cards com cor oficial
+   --------------------------------------------------------- */
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.class-card {
+  --c: var(--gold);
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  background:
+    linear-gradient(180deg,
+      rgba(28, 22, 14, 0.95) 0%,
+      rgba(16, 12, 8, 0.98) 100%);
+  border: 1px solid var(--border-gold);
+  border-top: 3px solid var(--c);
+  padding: 18px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.class-card:hover {
+  border-color: var(--c);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--c) 25%, transparent);
+  transform: translateY(-2px);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border: 2px solid var(--c);
+  background: #000;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  color: var(--c);
+  box-shadow: 0 0 0 1px #000;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.class-card h3 {
+  font-family: var(--font-head);
+  color: var(--c);
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.class-role {
+  color: var(--muted);
+  font-size: 0.8rem;
+  display: block;
+}
+
+.class-card p {
+  color: #bdbaa9;
+  font-size: 0.86rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   16. Modal — janela de personagem
+   --------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(5, 6, 8, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal {
+  --c: var(--gold);
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  max-height: 88vh;
+  background:
+    linear-gradient(180deg,
+      rgba(28, 22, 14, 0.98) 0%,
+      rgba(14, 11, 6, 0.99) 100%);
+  border: 2px solid var(--c);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 215, 80, 0.08),
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(240, 192, 64, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: modalOpen 0.25s ease-out;
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 10px;
+  z-index: 2;
+  transition: color 0.15s;
+}
+
+.modal-close:hover {
+  color: var(--gold);
+}
+
+.modal-body {
+  display: flex;
+  gap: 28px;
+  padding: 32px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.modal-text {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 12px;
+  min-width: 0;
+}
+
+.modal-text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-text::-webkit-scrollbar-thumb {
+  background: var(--border-gold);
+  border-radius: 3px;
+}
+
+.modal-text::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dim);
+}
+
+.modal h2 {
+  font-family: var(--font-head);
+  font-size: 1.9rem;
+  color: var(--c);
+  line-height: 1.2;
+  margin: 2px 0 10px;
+}
+
+.class-difficulty {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(14, 11, 6, 0.9);
+  border: 1px solid var(--border-gold);
+  padding: 5px 14px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.stars {
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.difficulty-note {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 6px;
+  max-width: 52ch;
+}
+
+.modal-desc {
+  color: var(--parchment);
+  margin: 16px 0 24px;
+  max-width: 62ch;
+}
+
+.specs-title {
+  font-family: var(--font-head);
+  color: var(--gold);
+  font-size: 1.15rem;
+  position: relative;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.specs-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  height: 1px;
+  background:
+    linear-gradient(90deg,
+      var(--gold-dim) 0%,
+      transparent 100%);
+}
+
+.spec-item {
+  background: rgba(14, 11, 6, 0.85);
+  border: 1px solid var(--border-gold);
+  border-left: 3px solid var(--c);
+  padding: 13px 16px;
+  margin-bottom: 10px;
+  transition: border-color 0.15s;
+}
+
+.spec-item:hover {
+  border-color: var(--gold-dim);
+}
+
+.spec-item h4 {
+  color: var(--text);
+  font-size: 1rem;
+  margin-bottom: 3px;
+}
+
+.spec-item p {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.modal-portrait {
+  width: 190px;
+  height: 190px;
+  flex-shrink: 0;
+  border: 3px solid var(--c);
+  background: #000;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 30px color-mix(in srgb, var(--c) 25%, transparent);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-head);
+  font-size: 4rem;
+  color: var(--c);
+  overflow: hidden;
+}
+
+.modal-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Modal: arte grande da classe */
+.modal-portrait[data-kind="art"] {
+  width: 230px;
+  height: 330px;
+}
+
+.modal-portrait[data-kind="art"] img {
+  object-position: center top;
+}
+
+.modal-portrait[data-kind="icon"] {
+  width: 128px;
+  height: 128px;
+}
+
+/* ---------------------------------------------------------
+   17. Seção de informações do jogo (nova)
+   --------------------------------------------------------- */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.info-card {
+  position: relative;
+  background:
+    linear-gradient(135deg,
+      rgba(20, 16, 10, 0.95) 0%,
+      rgba(12, 10, 6, 0.98) 100%);
+  border: 1px solid var(--border-gold);
+  padding: 20px;
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.info-card:hover {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 16px rgba(240, 192, 64, 0.1);
+}
+
+.info-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.info-card h3 {
+  font-family: var(--font-head);
+  color: var(--gold);
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.info-card p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------
+   18. Footer — estilo Battle.net
+   --------------------------------------------------------- */
+footer {
+  position: relative;
+  margin-top: 52px;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* Borda ornamental superior do footer */
+.footer-border {
+  height: 4px;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      var(--gold-dark) 20%,
+      var(--gold-dim) 50%,
+      var(--gold-dark) 80%,
+      transparent 100%);
+  margin-bottom: 0;
+}
+
+.footer-content {
+  background:
+    linear-gradient(180deg,
+      rgba(18, 14, 8, 0.98) 0%,
+      rgba(8, 6, 3, 0.99) 100%);
+  padding: 36px 20px 28px;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto 28px;
+}
+
+.footer-col h4 {
+  font-family: var(--font-head);
+  color: var(--gold-dim);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-gold);
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col li {
+  margin-bottom: 6px;
+}
+
+.footer-col a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: color 0.15s;
+}
+
+.footer-col a:hover {
+  color: var(--gold);
+}
+
+.footer-bottom {
+  text-align: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-gold);
+}
+
+.footer-bottom p {
+  margin-bottom: 4px;
+}
+
+.footer-logo {
+  font-family: var(--font-head);
+  color: var(--gold-dim);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  margin-top: 12px;
+  opacity: 0.7;
+}
+
+
+
+/* ---------------------------------------------------------
+   20. Animações e efeitos refinados (UI/UX)
+   --------------------------------------------------------- */
+
+/* Keyframe de entrada suave dos painéis e seções */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scroll reveal e classes de transição */
+.panel {
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.panel.reveal-ready {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.panel.reveal-ready.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Partículas sutis no hero, nos painéis e no footer */
+.hero-particles,
+.panel-particles,
+.footer-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fallback de partículas puramente CSS */
+.hero-particles::before,
+.hero-particles::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--gold-bright);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold);
+  opacity: 0;
+  animation: magicSparkFloat 7s ease-in-out infinite;
+}
+
+.hero-particles::before {
+  left: 22%;
+  bottom: 15%;
+  animation-delay: 0s;
+}
+
+.hero-particles::after {
+  left: 76%;
+  bottom: 25%;
+  width: 5px;
+  height: 5px;
+  background: var(--sky);
+  box-shadow: 0 0 10px var(--sky);
+  animation-delay: 3.5s;
+}
+
+/* Partícula gerada dinamicamente via JS */
+.magic-spark {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: magicSparkFloat var(--spark-dur, 6s) ease-in-out infinite;
+  animation-delay: var(--spark-delay, 0s);
+  opacity: 0;
+}
+
+.magic-spark--gold {
+  background: var(--gold-bright);
+  box-shadow:
+    0 0 6px var(--gold),
+    0 0 12px rgba(240, 192, 64, 0.4);
+}
+
+.magic-spark--sky {
+  background: var(--sky);
+  box-shadow:
+    0 0 6px var(--sky),
+    0 0 14px rgba(79, 195, 201, 0.4);
+}
+
+.magic-spark--amber {
+  background: #ffb74d;
+  box-shadow: 0 0 6px rgba(255, 183, 77, 0.6);
+}
+
+@keyframes magicSparkFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) scale(0.6);
+  }
+
+  20% {
+    opacity: var(--spark-op, 0.65);
+  }
+
+  75% {
+    opacity: calc(var(--spark-op, 0.65) * 0.7);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(var(--spark-travel, -130px)) translateX(var(--spark-drift, 20px)) scale(1.1);
+  }
+}
+
+/* Animação suave ao atualizar o card de detalhes da raça */
+.race-card.race-card-updating {
+  animation: raceCardUpdate 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes raceCardUpdate {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.99) translateY(4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Glow e micro-interação no retrato da raça */
+.portrait {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.portrait:hover {
+  border-color: var(--gold-bright);
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 4px var(--gold),
+    0 0 24px rgba(240, 192, 64, 0.4);
+  transform: scale(1.02);
+}
+
+/* Pulsação sutil na tag de combinação nova (dourada) */
+.class-tag.is-new {
+  animation: newTagGlow 3.5s ease-in-out infinite alternate;
+  position: relative;
+}
+
+@keyframes newTagGlow {
+  0% {
+    box-shadow: 0 0 0 1px rgba(240, 192, 64, 0.35);
+    border-color: rgba(240, 192, 64, 0.55);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 2px rgba(240, 192, 64, 0.75),
+      0 0 14px rgba(240, 192, 64, 0.35);
+    border-color: var(--gold-bright);
+  }
+}
+
+/* Micro-interação nos cards de classe do Grimório */
+.class-card {
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.class-card:hover {
+  transform: translateY(-5px) scale(1.015);
+  border-color: var(--c);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.65),
+    0 0 24px color-mix(in srgb, var(--c) 32%, transparent);
+}
+
+.class-card .icon img {
+  transition: transform 0.28s ease, filter 0.28s ease;
+}
+
+.class-card:hover .icon img {
+  transform: scale(1.08);
+  filter: brightness(1.15);
+}
+
+/* Micro-interações nas abas de facção */
+.faction-tab {
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.faction-tab:hover {
+  transform: translateY(-1px);
+}
+
+.faction-tab.active {
+  box-shadow:
+    inset 0 0 14px color-mix(in srgb, var(--accent) 25%, transparent),
+    0 2px 10px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Micro-interações no seletor de raças */
+.race-btn {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.race-btn:hover {
+  transform: translateY(-1px);
+}
+
+.race-btn.active {
+  transform: translateY(-1px);
+}
+
+/* Micro-interação nos cards Sobre o Jogo e Edições */
+.info-card {
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-dim);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.65),
+    0 0 18px rgba(240, 192, 64, 0.16);
+}
+
+.info-card .info-icon {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.info-card:hover .info-icon {
+  transform: translateY(-3px) scale(1.15);
+}
+
+/* Micro-interações na barra de áudio */
+.btn-audio {
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-audio:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 14px rgba(240, 192, 64, 0.4);
+}
+
+.btn-audio:active {
+  transform: translateY(0);
+}
+
+.audio-bar {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.audio-bar.is-playing {
+  border-color: var(--gold-dim);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 215, 80, 0.15),
+    0 0 22px rgba(240, 192, 64, 0.18),
+    0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+.audio-bar.is-playing .audio-status {
+  color: var(--gold-bright);
+  animation: audioStatusBreathe 2s ease-in-out infinite;
+}
+
+@keyframes audioStatusBreathe {
+
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 8px var(--gold-glow);
+  }
+}
+
+
+
+/* Blocos de contagem regressiva */
+.countdown-block {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.countdown-block:hover {
+  transform: translateY(-2px);
+}
+
+/* Footer com shimmer dourado e pulsação em FOR AZEROTH */
+.footer-border {
+  background-size: 200% 100%;
+  animation: borderGlowFlow 10s linear infinite;
+}
+
+.footer-logo {
+  animation: forAzerothPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes forAzerothPulse {
+  0% {
+    opacity: 0.6;
+    text-shadow: none;
+  }
+
+  100% {
+    opacity: 0.95;
+    color: var(--gold);
+    text-shadow: 0 0 12px rgba(240, 192, 64, 0.45);
+  }
+}
+
+/* ---------------------------------------------------------
+   21. Responsividade
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .site-nav {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 8px 12px;
+    gap: 2px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .nav-sep {
+    display: none;
+  }
+
+  .countdown-section {
+    gap: 10px;
+  }
+
+  .countdown-value {
+    font-size: 1.4rem;
+  }
+
+  .hero-logo {
+    max-width: 335px;
+  }
+
+  .hero-logo-glow {
+    width: 265px;
+    height: 265px;
+  }
+}
+
 @media (max-width: 640px) {
-    .panel { padding: 22px 16px; }
-    .race-card { flex-direction: column; text-align: center; }
-    .class-tags { justify-content: center; }
-    .modal-body { flex-direction: column-reverse; padding: 24px 18px; gap: 16px; overflow-y: auto; }
-    .modal-text { overflow: visible; padding-right: 0; }
-    .modal-portrait { width: 96px; height: 96px; align-self: center; font-size: 2rem; }
-    .audio-bar { flex-wrap: wrap; justify-content: center; }
+  .hero-logo {
+    max-width: 288px;
+  }
+
+  .hero-logo-glow {
+    width: 220px;
+    height: 220px;
+  }
+
+  .panel {
+    padding: 22px 16px;
+  }
+
+  .race-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .class-tags {
+    justify-content: center;
+  }
+
+  .modal-body {
+    flex-direction: column-reverse;
+    padding: 24px 18px;
+    gap: 16px;
+    overflow-y: auto;
+  }
+
+  .modal-text {
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .modal-portrait {
+    width: 96px;
+    height: 96px;
+    align-self: center;
+    font-size: 2rem;
+  }
+
+  .modal-portrait[data-kind="art"] {
+    width: 100%;
+    max-width: 260px;
+    height: 170px;
+    align-self: center;
+  }
+
+  .modal-portrait[data-kind="art"] img {
+    object-position: center 20%;
+  }
+
+  .modal-portrait[data-kind="icon"] {
+    width: 96px;
+    height: 96px;
+  }
+
+  .audio-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 60px 16px 36px;
+  }
+
+  .footer-columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
+@media (max-width: 400px) {
+  .footer-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------
+   22. Preferências do usuário
+   --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
-/* Modal: arte grande da classe (ou ícone, se não houver arte) */
-.modal-portrait[data-kind="art"] { width: 230px; height: 330px; }
-.modal-portrait[data-kind="art"] img { object-position: center top; }
-.modal-portrait[data-kind="icon"] { width: 128px; height: 128px; }
-
-@media (max-width: 640px) {
-    .modal-portrait[data-kind="art"] { width: 100%; max-width: 260px; height: 170px; align-self: center; }
-    .modal-portrait[data-kind="art"] img { object-position: center 20%; }
-    .modal-portrait[data-kind="icon"] { width: 96px; height: 96px; }
+@media (prefers-color-scheme: light) {
+  /* Mantém o tema escuro — é a identidade do WoW */
 }
-
-.difficulty-note { color: var(--muted); font-size: .78rem; margin-top: 6px; max-width: 52ch; }

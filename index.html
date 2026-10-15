@@ -1,25 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Guia de raças, classes e combinações do World of Warcraft: Forever (Classic+), com a nova raça Skyborne.">
-    <title>WoW Forever - Guia de Raças e Classes</title>
+    <meta name="description"
+        content="Guia completo de raças, classes e combinações do World of Warcraft: Forever (Classic+). Lançamento em 4 de novembro de 2026. Nova raça Skyborne e novas combinações de classes.">
+    <meta name="keywords" content="WoW Forever, World of Warcraft, Classic Plus, Skyborne, raças, classes, guia">
+    <title>WoW Forever — Guia de Raças e Classes | Classic+</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
+    <!-- ====== Navbar ornamental ====== -->
+    <nav class="site-nav" aria-label="Menu principal">
+        <ul class="nav-links">
+            <li><a class="nav-link active" href="index.html">Início</a></li>
+            <li class="nav-sep" aria-hidden="true"></li>
+            <li><a class="nav-link" href="#titulo-racas">Raças</a></li>
+            <li class="nav-sep" aria-hidden="true"></li>
+            <li><a class="nav-link" href="#titulo-classes">Classes</a></li>
+            <li class="nav-sep" aria-hidden="true"></li>
+            <li><a class="nav-link" href="#titulo-info">Sobre o Jogo</a></li>
+            <li class="nav-sep" aria-hidden="true"></li>
+            <li><a class="nav-link" href="#titulo-edicoes">Edições</a></li>
+        </ul>
+    </nav>
+
+    <!-- ====== Hero — banner principal ====== -->
     <header class="hero">
+        <div class="hero-particles" aria-hidden="true"></div>
         <div class="hero-inner">
-            <p class="badge">Classic Plus</p>
-            <h1>World of Warcraft: Forever</h1>
-            <p class="hero-sub">Guia atualizado de raças, classes e combinações.</p>
+            <div class="hero-logo-box">
+                <div class="hero-logo-glow" aria-hidden="true"></div>
+                <h1 class="hero-title">
+                    <img class="hero-logo" src="img/wow-forever-logo.png" alt="World of Warcraft: Forever" width="506"
+                        height="412" loading="eager">
+                    <span class="sr-only">World of Warcraft: Forever</span>
+                </h1>
+            </div>
+            <p class="hero-sub">Uma nova era de Azeroth começa em 4 de novembro.</p>
+
+            <!-- Contagem regressiva -->
+            <div class="countdown-section" id="countdown" aria-label="Contagem regressiva para o lançamento">
+                <div class="countdown-block">
+                    <span class="countdown-value" id="countDays">--</span>
+                    <span class="countdown-label">Dias</span>
+                </div>
+                <div class="countdown-block">
+                    <span class="countdown-value" id="countHours">--</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-block">
+                    <span class="countdown-value" id="countMinutes">--</span>
+                    <span class="countdown-label">Min</span>
+                </div>
+                <div class="countdown-block">
+                    <span class="countdown-value" id="countSeconds">--</span>
+                    <span class="countdown-label">Seg</span>
+                </div>
+            </div>
         </div>
 
+        <!-- Player de áudio -->
         <div class="audio-bar" role="group" aria-label="Trilha sonora">
             <button id="playBtn" class="btn-audio" type="button" aria-pressed="false">▶ Tocar</button>
             <div class="audio-info">
@@ -37,17 +86,26 @@
         </div>
     </header>
 
+    <!-- ====== Conteúdo principal ====== -->
     <main id="conteudo" class="container">
 
+        <!-- Seção: Raças e combinações -->
         <section class="panel" aria-labelledby="titulo-racas">
+            <div class="panel-particles" aria-hidden="true"></div>
+            <span class="panel-corner-bl" aria-hidden="true"></span>
+            <span class="panel-corner-br" aria-hidden="true"></span>
             <h2 id="titulo-racas">Raças e combinações</h2>
-            <p class="section-desc">Escolha uma facção e uma raça para ver as classes disponíveis. Combinações novas em relação ao Classic aparecem em dourado.</p>
+            <p class="section-desc">Escolha uma facção e uma raça para ver as classes disponíveis. Combinações novas em
+                relação ao Classic aparecem em dourado.</p>
 
             <div class="toolbar">
                 <div class="faction-tabs" role="tablist" aria-label="Facção">
-                    <button class="faction-tab active alliance" role="tab" aria-selected="true" data-faction="alliance" type="button">Aliança</button>
-                    <button class="faction-tab horde" role="tab" aria-selected="false" data-faction="horde" type="button">Horda</button>
-                    <button class="faction-tab skyborne" role="tab" aria-selected="false" data-faction="skyborne" type="button">Skyborne</button>
+                    <button class="faction-tab active alliance" role="tab" aria-selected="true" data-faction="alliance"
+                        type="button">Aliança</button>
+                    <button class="faction-tab horde" role="tab" aria-selected="false" data-faction="horde"
+                        type="button">Horda</button>
+                    <button class="faction-tab skyborne" role="tab" aria-selected="false" data-faction="skyborne"
+                        type="button">Skyborne</button>
                 </div>
                 <label class="toggle">
                     <input type="checkbox" id="onlyNew">
@@ -56,7 +114,8 @@
             </div>
 
             <p class="notice" id="skyNotice" hidden>
-                A Skyborne pode se unir à Aliança ou à Horda, e a classe extra muda conforme a facção: Mago na Aliança, Xamã na Horda.
+                A Skyborne pode se unir à Aliança ou à Horda, e a classe extra muda conforme a facção: Mago na Aliança,
+                Xamã na Horda.
                 A raça é paga: exige o Skyborne Heroic Pack ou uma edição que o inclua.
             </p>
 
@@ -66,8 +125,12 @@
                 <div class="portrait-col">
                     <div class="portrait" id="racePortrait"></div>
                     <div class="gender-toggle" role="group" aria-label="Versão do personagem">
-                        <button type="button" class="gender-btn active" data-gender="male" aria-pressed="true" title="Masculino"><span aria-hidden="true">♂</span><span class="sr-only">Masculino</span></button>
-                        <button type="button" class="gender-btn" data-gender="female" aria-pressed="false" title="Feminino"><span aria-hidden="true">♀</span><span class="sr-only">Feminino</span></button>
+                        <button type="button" class="gender-btn active" data-gender="male" aria-pressed="true"
+                            title="Masculino"><span aria-hidden="true">♂</span><span
+                                class="sr-only">Masculino</span></button>
+                        <button type="button" class="gender-btn" data-gender="female" aria-pressed="false"
+                            title="Feminino"><span aria-hidden="true">♀</span><span
+                                class="sr-only">Feminino</span></button>
                     </div>
                 </div>
                 <div class="race-info">
@@ -78,18 +141,141 @@
             </article>
         </section>
 
+        <!-- Seção: Grimório de classes -->
         <section class="panel" aria-labelledby="titulo-classes">
+            <div class="panel-particles" aria-hidden="true"></div>
+            <span class="panel-corner-bl" aria-hidden="true"></span>
+            <span class="panel-corner-br" aria-hidden="true"></span>
             <h2 id="titulo-classes">Grimório de classes</h2>
             <p class="section-desc">Selecione uma classe para ver papéis, dificuldade e especializações.</p>
             <div class="class-grid" id="classGrid"></div>
         </section>
+
+        <!-- Seção: Sobre o jogo (nova) -->
+        <section class="panel" aria-labelledby="titulo-info">
+            <div class="panel-particles" aria-hidden="true"></div>
+            <span class="panel-corner-bl" aria-hidden="true"></span>
+            <span class="panel-corner-br" aria-hidden="true"></span>
+            <h2 id="titulo-info">Sobre WoW Forever</h2>
+            <p class="section-desc">O Classic+ oficial da Blizzard. Uma linha do tempo alternativa de Azeroth com level
+                cap 60, novas zonas, raides e a raça Skyborne.</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <span class="info-icon" aria-hidden="true">
+                        <img src="https://wow.zamimg.com/images/wow/icons/large/achievement_level_60.jpg" alt=""
+                            loading="lazy">
+                    </span>
+                    <h3>Level Cap 60</h3>
+                    <p>Experiência clássica permanente, sem expansões. Mais de 1.000 novas quests no leveling de 1 a 60.
+                    </p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon" aria-hidden="true">
+                        <img src="https://wow.zamimg.com/images/wow/icons/large/icon_treasuremap.jpg" alt=""
+                            loading="lazy">
+                    </span>
+                    <h3>Novas Zonas</h3>
+                    <p>Zephras Isle, Monte Hyjal e Riverglades. Regiões inéditas para explorar em Azeroth.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon" aria-hidden="true">
+                        <img src="https://wow.zamimg.com/images/wow/icons/large/levelupicon-lfd.jpg" alt=""
+                            loading="lazy">
+                    </span>
+                    <h3>Raids no Lançamento</h3>
+                    <p>Barrow Deeps (10), Hyjal Summit (20) e Onyxia (40) a partir de 9 de dezembro.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon" aria-hidden="true">
+                        <img src="https://wow.zamimg.com/images/wow/icons/large/race_skyborne_male.jpg" alt=""
+                            loading="lazy">
+                    </span>
+                    <h3>Nova Raça: Skyborne</h3>
+                    <p>Elfos descendentes de exilados altaelfos com pacto elemental. Disponível com o Heroic Pack.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Edições (nova) -->
+        <section class="panel" aria-labelledby="titulo-edicoes">
+            <div class="panel-particles" aria-hidden="true"></div>
+            <span class="panel-corner-bl" aria-hidden="true"></span>
+            <span class="panel-corner-br" aria-hidden="true"></span>
+            <h2 id="titulo-edicoes">Edições e pacotes</h2>
+            <p class="section-desc">Todos os jogadores com assinatura WoW ativa têm acesso ao Forever. Os pacotes abaixo
+                oferecem conteúdo adicional.</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <span class="info-icon" aria-hidden="true"><img src="img/heroic-pack.png" alt="Heroic Pack"></span>
+                    <h3>Skyborne Heroic Pack</h3>
+                    <p>R$ 109,80 — Acesso à raça Skyborne e itens cosméticos temáticos.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon" aria-hidden="true"><img src="img/epic-pack.png" alt="Epic Pack"></span>
+                    <h3>Skyborne Epic Pack</h3>
+                    <p>R$ 219,00 — Heroic Pack + 30 dias de game time + cosméticos épicos exclusivos.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon" aria-hidden="true"><img src="img/collection-pack.png"
+                            alt="Warcraft Forever Collection"></span>
+                    <h3>Warcraft Forever Collection</h3>
+                    <p>R$ 289,00 — Epic Pack + Warcraft III: Reforged + campanha Forsaken Kingdom.</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <!-- ====== Footer estilo Battle.net ====== -->
     <footer>
-        <p>&copy; 2026 WoW Forever Community Project. Projeto de fãs, sem vínculo com a Blizzard Entertainment.</p>
-        <p>As especializações seguem as árvores do WoW Classic e podem mudar até o lançamento.</p>
+        <div class="footer-border" aria-hidden="true"></div>
+        <div class="footer-particles" aria-hidden="true"></div>
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <h4>Comunidade</h4>
+                    <ul>
+                        <li><a href="#titulo-racas">Guia de Raças</a></li>
+                        <li><a href="#titulo-classes">Grimório de Classes</a></li>
+                        <li><a href="#titulo-info">Sobre o Jogo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="https://mobalytics.gg" target="_blank" rel="noopener noreferrer">Mobalytics</a>
+                        </li>
+                        <li><a href="https://www.warcrafttavern.com" target="_blank" rel="noopener noreferrer">Warcraft
+                                Tavern</a></li>
+                        <li><a href="https://www.wowhead.com" target="_blank" rel="noopener noreferrer">Wowhead</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Datas Importantes</h4>
+                    <ul>
+                        <li><a href="#">27/Out — Reserva de nomes</a></li>
+                        <li><a href="#">04/Nov — Lançamento</a></li>
+                        <li><a href="#">09/Dez — Primeira Raid</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="https://battle.net" target="_blank" rel="noopener noreferrer">Battle.net</a></li>
+                        <li><a href="https://blizzard.com" target="_blank" rel="noopener noreferrer">Blizzard</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 WoW Forever Community Project. Projeto de fãs, sem vínculo com a Blizzard Entertainment.
+                </p>
+                <p>As especializações seguem as árvores do WoW Classic e podem mudar até o lançamento.</p>
+                <p class="footer-logo" aria-hidden="true">— FOR AZEROTH —</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- ====== Modal de classe ====== -->
     <div id="classModal" class="modal-overlay" hidden>
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalClassName">
             <button class="modal-close" id="closeModalBtn" type="button" aria-label="Fechar">&times;</button>
@@ -101,7 +287,8 @@
                         <span>Dificuldade para iniciantes</span>
                         <span id="modalDifficulty"></span>
                     </div>
-                    <p class="difficulty-note">Avaliação do guia, baseada na experiência da comunidade do Classic. Não é um dado oficial.</p>
+                    <p class="difficulty-note">Avaliação do guia, baseada na experiência da comunidade do Classic. Não é
+                        um dado oficial.</p>
                     <p id="modalClassDesc" class="modal-desc"></p>
                     <h3 class="specs-title">Especializações</h3>
                     <div id="modalSpecsList"></div>
@@ -113,4 +300,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
