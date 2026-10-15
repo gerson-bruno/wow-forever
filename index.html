@@ -19,22 +19,39 @@
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
     <!-- ====== Navbar ornamental ====== -->
-    <nav class="site-nav" aria-label="Menu principal">
-        <ul class="nav-links">
-            <li><a class="nav-link active" href="index.html">Início</a></li>
-            <li class="nav-sep" aria-hidden="true"></li>
-            <li><a class="nav-link" href="#titulo-racas">Raças</a></li>
-            <li class="nav-sep" aria-hidden="true"></li>
-            <li><a class="nav-link" href="#titulo-classes">Classes</a></li>
-            <li class="nav-sep" aria-hidden="true"></li>
-            <li><a class="nav-link" href="#titulo-info">Sobre o Jogo</a></li>
-            <li class="nav-sep" aria-hidden="true"></li>
-            <li><a class="nav-link" href="#titulo-edicoes">Edições</a></li>
-        </ul>
+    <nav class="site-nav" id="siteNav" aria-label="Menu principal">
+        <div class="nav-container">
+            <a href="#top" class="nav-brand" aria-label="WoW Forever - Ir para o início">
+                <!-- <img class="nav-brand-logo" src="img/wow-forever-logo.png" alt="" width="34" height="28">
+                <span class="nav-brand-text">WoW Forever</span> -->
+            </a>
+
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menu de navegação"
+                aria-expanded="false" aria-controls="navLinks">
+                <span class="hamburger-box">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </span>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a class="nav-link active" href="#top">Início</a></li>
+                <li class="nav-sep" aria-hidden="true"></li>
+                <li><a class="nav-link" href="#titulo-racas">Raças</a></li>
+                <li class="nav-sep" aria-hidden="true"></li>
+                <li><a class="nav-link" href="#titulo-classes">Classes</a></li>
+                <li class="nav-sep" aria-hidden="true"></li>
+                <li><a class="nav-link" href="#titulo-info">Sobre o Jogo</a></li>
+                <li class="nav-sep" aria-hidden="true"></li>
+                <li><a class="nav-link" href="#titulo-edicoes">Edições</a></li>
+            </ul>
+        </div>
     </nav>
+    <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
 
     <!-- ====== Hero — banner principal ====== -->
-    <header class="hero">
+    <header class="hero" id="top">
         <div class="hero-particles" aria-hidden="true"></div>
         <div class="hero-inner">
             <div class="hero-logo-box">

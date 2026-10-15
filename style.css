@@ -43,6 +43,9 @@
 
   /* Atalho usado pelo JS para cor de classe */
   --accent: var(--gold);
+
+  /* Altura da navbar fixa */
+  --nav-height: 56px;
 }
 
 /* ---------------------------------------------------------
@@ -71,6 +74,17 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+}
+
+.hero,
+.panel,
+[id] {
+  scroll-margin-top: calc(var(--nav-height) + 14px);
+}
+
+body.nav-menu-locked {
+  overflow: hidden;
 }
 
 body {
@@ -125,38 +139,149 @@ img {
 }
 
 /* ---------------------------------------------------------
-   5. Navbar ornamental (novo)
+   5. Navbar ornamental fixa com suporte a Menu Hambúrguer
    --------------------------------------------------------- */
 .site-nav {
-  position: relative;
-  z-index: 100;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 0 20px;
-  height: 52px;
   background:
     linear-gradient(180deg,
-      rgba(40, 32, 16, 0.95) 0%,
-      rgba(22, 18, 10, 0.98) 100%);
-  border-top: 2px solid var(--gold-dim);
+      rgba(28, 22, 12, 0.94) 0%,
+      rgba(16, 12, 7, 0.98) 100%);
+  border-top: none;
   border-bottom: 2px solid var(--gold-dim);
   box-shadow:
     inset 0 1px 0 rgba(255, 215, 80, 0.15),
-    inset 0 -1px 0 rgba(255, 215, 80, 0.1),
-    0 4px 20px rgba(0, 0, 0, 0.6);
+    inset 0 -1px 0 rgba(255, 215, 80, 0.08),
+    0 4px 20px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* Ornamentos laterais da navbar */
-.site-nav::before,
-.site-nav::after {
-  content: '◆';
-  color: var(--gold-dim);
-  font-size: 0.65rem;
-  opacity: 0.6;
+/* Efeito ao rolar a página */
+.site-nav.is-scrolled {
+  background:
+    linear-gradient(180deg,
+      rgba(18, 14, 8, 0.98) 0%,
+      rgba(10, 8, 5, 0.99) 100%);
+  border-bottom-color: var(--gold);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 215, 80, 0.22),
+    inset 0 -1px 0 rgba(255, 215, 80, 0.12),
+    0 6px 26px rgba(0, 0, 0, 0.85),
+    0 0 15px rgba(240, 192, 64, 0.15);
 }
 
+/* Container que alinha a marca e os links */
+.nav-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Marca / Mini-Logo no topo */
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--gold-bright);
+  transition: transform 0.2s ease, filter 0.2s ease;
+  user-select: none;
+}
+
+.nav-brand:hover {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 0 8px var(--gold-glow));
+}
+
+.nav-brand-logo {
+  width: 32px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+.nav-brand-text {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  text-shadow: 0 0 8px rgba(240, 192, 64, 0.35);
+}
+
+/* Botão Hambúrguer (invisível no desktop) */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background: rgba(240, 192, 64, 0.06);
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+  background: rgba(240, 192, 64, 0.16);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.hamburger-box {
+  width: 22px;
+  height: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.hamburger-bar {
+  width: 100%;
+  height: 2px;
+  background-color: var(--gold);
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease,
+              background-color 0.25s ease;
+  transform-origin: center;
+}
+
+/* Animação do botão hambúrguer para o 'X' */
+.site-nav.menu-open .hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+  background-color: var(--gold-bright);
+}
+
+.site-nav.menu-open .hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.site-nav.menu-open .hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+  background-color: var(--gold-bright);
+}
+
+/* Links no Desktop */
 .nav-links {
   display: flex;
   align-items: center;
@@ -166,7 +291,7 @@ img {
 
 .nav-link {
   display: inline-block;
-  padding: 8px 18px;
+  padding: 8px 16px;
   color: var(--gold);
   font-family: var(--font-head);
   font-size: 0.82rem;
@@ -196,6 +321,29 @@ img {
   background: var(--gold-dim);
   border-radius: 50%;
   opacity: 0.5;
+}
+
+/* Backdrop escuro para quando o menu mobile está aberto */
+.nav-backdrop {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nav-backdrop.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* ---------------------------------------------------------
@@ -1645,22 +1793,88 @@ footer {
    21. Responsividade
    --------------------------------------------------------- */
 @media (max-width: 768px) {
-  .site-nav {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 8px 12px;
-    gap: 2px;
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .nav-toggle {
+    display: flex;
   }
 
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background:
+      linear-gradient(180deg,
+        rgba(26, 20, 12, 0.98) 0%,
+        rgba(14, 11, 7, 0.99) 100%);
+    border-bottom: 2px solid var(--gold-dim);
+    box-shadow:
+      0 16px 32px rgba(0, 0, 0, 0.85),
+      inset 0 1px 0 rgba(255, 215, 80, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    flex-direction: column;
+    padding: 14px 16px 20px;
+    gap: 8px;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease,
+                transform 0.25s ease,
+                visibility 0.25s;
+  }
+
+  .site-nav.menu-open .nav-links {
+    max-height: 440px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-links li {
+    width: 100%;
   }
 
   .nav-link {
-    padding: 6px 12px;
-    font-size: 0.75rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    border: 1px solid rgba(240, 192, 64, 0.12);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-link::before {
+    content: '◆';
+    margin-right: 12px;
+    font-size: 0.65rem;
+    color: var(--gold-dim);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    background: rgba(240, 192, 64, 0.14);
+    border-color: var(--gold);
+    color: var(--gold-bright);
+    text-shadow: 0 0 10px var(--gold-glow);
+  }
+
+  .nav-link:hover::before,
+  .nav-link.active::before {
+    color: var(--gold-bright);
+    transform: scale(1.25);
   }
 
   .nav-sep {

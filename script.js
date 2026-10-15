@@ -262,6 +262,7 @@ function loadGender() {
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initNavbar();
   initAudio();
   initFactionTabs();
   initGender();
@@ -658,7 +659,85 @@ function initCountdown() {
 }
 
 /* =========================================================
-   11. Navegação ativa por scroll (Intersection Observer)
+   11. Navbar fixa com Menu Hambúrguer (Mobile) e scroll styling
+   ========================================================= */
+
+function initNavbar() {
+  const nav = $("siteNav");
+  const toggle = $("navToggle");
+  const backdrop = $("navBackdrop");
+  if (!nav || !toggle) return;
+
+  const openMenu = () => {
+    nav.classList.add("menu-open");
+    toggle.classList.add("is-active");
+    toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-label", "Fechar menu de navegação");
+    if (backdrop) backdrop.classList.add("is-visible");
+    document.body.classList.add("nav-menu-locked");
+  };
+
+  const closeMenu = () => {
+    nav.classList.remove("menu-open");
+    toggle.classList.remove("is-active");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Abrir menu de navegação");
+    if (backdrop) backdrop.classList.remove("is-visible");
+    document.body.classList.remove("nav-menu-locked");
+  };
+
+  const toggleMenu = () => {
+    if (nav.classList.contains("menu-open")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  };
+
+  toggle.addEventListener("click", toggleMenu);
+
+  if (backdrop) {
+    backdrop.addEventListener("click", closeMenu);
+  }
+
+  /* Fecha o menu ao clicar em qualquer link da navbar */
+  const links = nav.querySelectorAll(".nav-link");
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      closeMenu();
+    });
+  });
+
+  /* Fecha o menu com tecla Escape */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav.classList.contains("menu-open")) {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+
+  /* Fecha o menu se a janela for redimensionada para desktop */
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768 && nav.classList.contains("menu-open")) {
+      closeMenu();
+    }
+  });
+
+  /* Reforço de sombra/estilo ao rolar a página */
+  const handleScroll = () => {
+    if (window.scrollY > 20) {
+      nav.classList.add("is-scrolled");
+    } else {
+      nav.classList.remove("is-scrolled");
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
+}
+
+/* =========================================================
+   12. Navegação ativa por scroll (Intersection Observer)
    ========================================================= */
 
 function initNavHighlight() {
@@ -681,6 +760,11 @@ function initNavHighlight() {
 
   if (!sections.length) return;
 
+  const setActive = (targetLink) => {
+    navLinks.forEach((l) => l.classList.remove("active"));
+    if (targetLink) targetLink.classList.add("active");
+  };
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -688,8 +772,7 @@ function initNavHighlight() {
         if (!match) return;
 
         if (entry.isIntersecting) {
-          navLinks.forEach((l) => l.classList.remove("active"));
-          match.link.classList.add("active");
+          setActive(match.link);
         }
       });
     },
@@ -700,6 +783,17 @@ function initNavHighlight() {
   );
 
   sections.forEach((s) => observer.observe(s.el));
+
+  /* Se estiver no topo da página, força o link 'Início' */
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (window.scrollY < 120 && linkMap.has("top")) {
+        setActive(linkMap.get("top"));
+      }
+    },
+    { passive: true }
+  );
 }
 
 /* =========================================================
